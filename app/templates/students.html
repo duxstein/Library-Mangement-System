@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Student List</h2>
+
+<nav>
+    <a href="{{ url_for('admin_dashboard') }}" class="nav-link">Books</a>
+    <a href="{{ url_for('transactions') }}" class="nav-link">Transactions</a>
+    <a href="{{ url_for('students') }}" class="nav-link">Students</a>
+</nav>
+
+
+<!-- Student Table -->
+<table>
+    <thead>
+        <tr>
+            <th>Roll Number</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Address 1</th>
+            <th>Address 2</th>
+            <th>Post Code</th>
+            <th>Mobile</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <td>{{ student.student_roll }}</td>
+            <td>{{ student.FirstName }}</td>
+            <td>{{ student.LastName }}</td>
+            <td>{{ student.Address1 }}</td>
+            <td>{{ student.Address2 }}</td>
+            <td>{{ student.PostCode }}</td>
+            <td>{{ student.Mobile }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

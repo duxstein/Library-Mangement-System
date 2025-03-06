@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<!-- Navigation Links -->
+<nav>
+    <a href="{{ url_for('admin_dashboard') }}" class="nav-link">Books</a>
+    <a href="{{ url_for('transactions') }}" class="nav-link">Transactions</a>
+    <a href="{{ url_for('students') }}" class="nav-link">Students</a>
+</nav>
+
+<!-- Add Book Form -->
+<div class="form-container">
+    <h3>Add a New Book</h3>
+    <form method="POST" action="{{ url_for('add_book') }}">
+        <div class="form-group">
+            <label for="book_id">Book ID:</label>
+            <input type="text" id="book_id" name="book_id" required>
+        </div>
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" required>
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" step="0.01" required>
+        </div>
+        <button type="submit" class="btn-primary">Add Book</button>
+    </form>
+</div>
+
+<!-- Book List -->
+<div class="book-list">
+    <h3>Book List</h3>
+    <div class="book-cards">
+        {% for book in books %}
+        <div class="book-card">
+            <div class="book-card-header">
+                <span class="book-id">{{ book.book_id }}</span>
+                <span class="book-price">${{ book.price }}</span>
+            </div>
+            <div class="book-card-body">
+                <h4>{{ book.title }}</h4>
+                <p>by {{ book.author }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

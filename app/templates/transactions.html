@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Transaction Management</h2>
+
+<nav>
+    <a href="{{ url_for('admin_dashboard') }}" class="nav-link">Books</a>
+    <a href="{{ url_for('transactions') }}" class="nav-link">Transactions</a>
+    <a href="{{ url_for('students') }}" class="nav-link">Students</a>
+</nav>
+
+<!-- Add Transaction Form -->
+<h3>Add a New Transaction</h3>
+<form method="POST" action="{{ url_for('add_transaction') }}">
+    <label for="student_roll">Student Roll Number:</label>
+    <input type="text" id="student_roll" name="student_roll" required>
+    
+    <label for="book_id">Book ID:</label>
+    <input type="text" id="book_id" name="book_id" required>
+    
+    <label for="issue_date">Issue Date:</label>
+    <input type="date" id="issue_date" name="issue_date" required>
+    
+    <label for="return_date">Return Date:</label>
+    <input type="date" id="return_date" name="return_date">
+    
+    <label for="fine">Fine:</label>
+    <input type="number" id="fine" name="fine" step="0.01">
+    
+    <button type="submit">Add Transaction</button>
+</form>
+
+<!-- Transaction List -->
+<h3>Transaction List</h3>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Student Roll Number</th>
+            <th>Book ID</th>
+            <th>Issue Date</th>
+            <th>Return Date</th>
+            <th>Fine</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{ transaction.id }}</td>
+            <td>{{ transaction.student.student_roll }}: {{ transaction.student.first_name }} {{ transaction.student.last_name }}</td>
+            <td>{{ transaction.book.book_id }}: {{ transaction.book.title }}</td>
+            <td>{{ transaction.issue_date.strftime('%Y-%m-%d') }}</td>
+            <td>{{ transaction.return_date.strftime('%Y-%m-%d') if transaction.return_date else 'Not Returned' }}</td>
+            <td>₹{{ transaction.fine }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
